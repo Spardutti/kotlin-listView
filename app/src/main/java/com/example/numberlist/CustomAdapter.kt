@@ -21,7 +21,10 @@ class CustomAdapter(var arrayList: ArrayList<Data>) : BaseAdapter() {
 
         var rowView: View? = p1
 
+        var mediaPlayer: MediaPlayer? = null
+
         val context = p2?.context
+
         val inflater: LayoutInflater =
             context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -39,13 +42,21 @@ class CustomAdapter(var arrayList: ArrayList<Data>) : BaseAdapter() {
 
         audioImageView?.setOnClickListener {
 
-            val mediaPlayer =
-                MediaPlayer.create(
-                    context,
-                    context.resources.getIdentifier(item.audioFileName, "raw", context.packageName)
-                )
-            mediaPlayer.start()
+            if (mediaPlayer == null) {
+
+                mediaPlayer =
+                    MediaPlayer.create(
+                        context,
+                        context.resources.getIdentifier(
+                            item.audioFileName,
+                            "raw",
+                            context.packageName
+                        )
+                    )
+            }
+            mediaPlayer?.start()
         }
+
 
         return rowView!!
     }
